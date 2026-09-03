@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OAISYS Master5</title>
+    <meta name="description" content="OAISYS 场景生成 → Isaac 物理导出 → PhysX 扫图导航。Photorealistic outdoor terrain simulation to Isaac Sim navigation." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --ink: #1c211e;
+            --ink-soft: #3a433e;
+            --sand: #d8c4a2;
+            --sand-deep: #b89a6e;
+            --sage: #4a6b55;
+            --sage-deep: #2f4a38;
+            --paper: #f3eee4;
+            --line: rgba(28, 33, 30, 0.14);
+            --glow: rgba(216, 196, 162, 0.35);
+            --font-display: "Sora", system-ui, sans-serif;
+            --font-body: "Sora", system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+        body {
+            font-family: var(--font-body);
+            color: var(--ink);
+            background: var(--paper);
+            line-height: 1.55;
+            overflow-x: hidden;
+        }
+        a {
+            color: inherit;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
+        }
+        a:hover {
+            color: var(--sage-deep);
+        }
+
+        /* —— Hero: one full-bleed composition —— */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            color: #f7f2e8;
+            isolation: isolate;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background:
+                linear-gradient(180deg, rgba(20, 24, 22, 0.35) 0%, rgba(20, 24, 22, 0.55) 45%, rgba(20, 24, 22, 0.82) 100%),
+                url("assets/web.png") center / cover no-repeat;
+            animation: heroDrift 28s ease-in-out infinite alternate;
+        }
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 70% 20%, rgba(184, 154, 110, 0.22), transparent 55%),
+                repeating-linear-gradient(-12deg,
+                    transparent,
+                    transparent 46px,
+                    rgba(255, 255, 255, 0.02) 46px,
+                    rgba(255, 255, 255, 0.02) 47px);
+            pointer-events: none;
+        }
+        @keyframes heroDrift {
+            from {
+                transform: scale(1.02) translate3d(0, 0, 0);
+            }
+            to {
+                transform: scale(1.08) translate3d(-1.5%, 1%, 0);
+            }
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem clamp(1.25rem, 4vw, 3rem);
+            animation: fadeDown 0.9s ease both;
+        }
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            font-size: 1.4rem;
+        }
+        .brand-mark img {
+            height: 75px;
+            width: 85px;
+            opacity: 0.95;
+        }
+        .top-links {
+            display: flex;
+            gap: 1.25rem;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        .top-links a {
+            text-decoration: none;
+            opacity: 0.88;
+        }
+        .top-links a:hover {
+            opacity: 1;
+            color: var(--sand);
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 clamp(1.25rem, 5vw, 4rem) clamp(2.5rem, 8vh, 5rem);
+            max-width: 100%;
+            text-align: center;
+            animation: fadeUp 1.1s 0.15s ease both;
+        }
+        .hero-brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
+            margin-bottom: 1rem;
+        }
+        .hero-brand span {
+            display: block;
+            font-size: 0.32em;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0.75;
+            margin-top: 0.55em;
+            font-family: var(--font-body);
+        }
+        .hero-line {
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            max-width: 34rem;
+            opacity: 0.92;
+            margin-bottom: 1.75rem;
+            font-weight: 400;
+        }
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem 1rem;
+            align-items: center;
+        }
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.85rem 1.35rem;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(247, 242, 232, 0.55);
+            background: rgba(247, 242, 232, 0.1);
+            backdrop-filter: blur(6px);
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+        .cta:hover {
+            background: rgba(247, 242, 232, 0.2);
+            border-color: #f7f2e8;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .cta.primary {
+            background: var(--sand);
+            color: var(--ink);
+            border-color: var(--sand);
+        }
+        .cta.primary:hover {
+            background: #e6d2ae;
+            color: var(--ink);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* —— Sections —— */
+        section {
+            padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+        }
+        .section-inner {
+            max-width: 68rem;
+            margin: 0 auto;
+        }
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 0.65rem;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.85rem, 4vw, 2.75rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+        .lede {
+            color: var(--ink-soft);
+            max-width: 40rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .pipeline {
+            background:
+                linear-gradient(165deg, #ebe4d6 0%, var(--paper) 40%, #e7efea 100%);
+            position: relative;
+        }
+        .pipeline::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(28, 33, 30, 0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* —— flow-item 渐入效果 —— */
+        .flow {
+            position: relative;
+            display: grid;
+            gap: 0;
+            border-top: 1px solid var(--line);
+        }
+        .flow-item {
+            display: grid;
+            grid-template-columns: minmax(4.5rem, 7rem) 1fr;
+            gap: 1.25rem 1.75rem;
+            padding: 1.75rem 0;
+            border-bottom: 1px solid var(--line);
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .flow-item.in {
+            opacity: 1;
+            transform: none;
+        }
+        .flow-id {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--sage);
+            line-height: 1;
+        }
+        .flow-item h3 {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .flow-item p {
+            color: var(--ink-soft);
+            max-width: 40rem;
+            font-size: 0.98rem;
+        }
+        .flow-meta {
+            margin-top: 0.65rem;
+            font-size: 0.82rem;
+            color: var(--sage-deep);
+            font-weight: 500;
+        }
+
+        /* —— 表格样式 —— */
+        .pipeline-table,
+        .experiment-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(2px);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin: 1.5rem 0 2rem;
+        }
+        .pipeline-table th,
+        .experiment-table th {
+            background: var(--sage);
+            color: #f7f2e8;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.8rem 1rem;
+            text-align: left;
+        }
+        .pipeline-table td,
+        .experiment-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .pipeline-table tr:last-child td,
+        .experiment-table tr:last-child td {
+            border-bottom: none;
+        }
+        .experiment-table td:first-child {
+            font-weight: 500;
+        }
+
+        /* —— Experiment 表格+图片 一人一半 —— */
+        .experiment-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: stretch;
+            margin-top: 1.5rem;
+        }
+        .experiment-layout>* {
+            flex: 1 1 calc(50% - 1rem);
+            min-width: 300px;
+        }
+        .experiment-table-wrap {
+            display: flex;
+            align-items: stretch;
+        }
+        .experiment-table-wrap table {
+            margin: 0;
+            align-self: stretch;
+        }
+        .experiment-image-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            min-height: 100%;
+        }
+        .experiment-image-wrap img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            background: #f0ebe0;
+        }
+
+        /* —— GIF / 视频展示组 —— */
+        .gif-group {
+            margin-top: 2.5rem;
+        }
+        .gif-caption {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ink);
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+        }
+        .gif-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .gif-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            background: #f0ebe0;
+        }
+        .gif-grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+        }
+        .gif-grid video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+            background: #1c211e;
+            display: block;
+        }
+        .gif-item {
+            margin: 0;
+        }
+        .gif-item figcaption {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 0.3rem;
+            color: var(--ink-soft);
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            .top-links {
+                gap: 0.75rem;
+                font-size: 0.78rem;
+            }
+            .flow-item {
+                grid-template-columns: 3.5rem 1fr;
+            }
+            .flow-id {
+                font-size: 1.8rem;
+            }
+            .gif-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .experiment-layout>* {
+                flex: 1 1 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg {
+                animation: none;
+            }
+            .flow-item,
+            .hero-main,
+            .topbar {
+                animation: none;
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="topbar">
+            <div class="brand-mark">
+                <img src="assets/cover.png" alt="" width="120" height="100" />
+                <span>VMR-Team</span>
+            </div>
+            <nav class="top-links" aria-label="文档">
+                <a href="README.md">Chinese</a>
+                <a href="Yreadme.md">English</a>
+                <a href="#pipeline">Method</a>
+            </nav>
+        </div>
+        <div class="hero-main">
+            <h1 class="hero-brand">
+                More Realistic and More Versatile: A Procedural Mars Scene Generation Framework for Multimodal Data and Reusable Assets
+                <span>VMR-Team</span>
+            </h1>
+            <p class="hero-line"></p>
+            <div class="cta-row">
+                <a class="cta primary" href="README.md" style="padding-left: 2.5rem; padding-right: 2.5rem; font-size: 1.4rem;">Paper</a>
+                <a class="cta" href="Yreadme.md" style="padding-left: 2.5rem; padding-right: 2.5rem; font-size: 1.4rem;">Code</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="pipeline" id="abstract">
+        <div class="section-inner">
+            <p class="eyebrow">Abstract</p>
+            <h2 style="text-align: center;">Abstract</h2>
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
+                We present a procedural framework for generating photorealistic Mars-like terrains with multi-modal data outputs including RGB images, semantic masks, depth maps, and physically accurate USD assets. Our pipeline enables seamless integration with Isaac Sim for autonomous navigation research, supporting multiple path planning algorithms with realistic physics simulation.
+            </p>
+        </div>
+    </section>
+
+    <section class="pipeline" id="framework">
+        <div class="section-inner">
+            <p class="eyebrow">Framework</p>
+            <h2>Framework Overview</h2>
+            <img src="figure/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
+                Our framework consists of three main modules: procedural terrain generation, multi-modal data synthesis, and physics-based asset export for simulation.
+            </p>
+        </div>
+    </section>
+
+    <section class="pipeline" id="pipeline">
+        <div class="section-inner">
+            <p class="eyebrow">Pipeline</p>
+            <h2 style="text-align: center;">Pipeline Overview</h2>
+
+            <img src="figure/liuchengx.png" alt="Pipeline" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />
+
+            <table class="pipeline-table">
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Description</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A. Scene Generation</td>
+                        <td>Blender-based terrain & rock placement</td>
+                        <td>Batch scenes + masks</td>
+                    </tr>
+                    <tr>
+                        <td>B. Physics Export</td>
+                        <td>USD with friction & collision</td>
+                        <td>Isaac-ready assets</td>
+                    </tr>
+                    <tr>
+                        <td>C. Navigation Demo</td>
+                        <td>PhysX costmap + multi‑algorithm planning</td>
+                        <td>Trajectory visualizations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="flow">
+                <div class="flow-item">
+                    <div class="flow-id">A</div>
+                    <div>
+                        <h3>Scene Generation</h3>
+                        <p>Blender-based terrain &amp; rock placement with semantic masks. Supports variable terrain complexity and rock distributions.</p>
+                        <div class="flow-meta">Output: batch scenes + RGB + semantic masks + depth</div>
+                    </div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-id">B</div>
+                    <div>
+                        <h3>Physics Export</h3>
+                        <p>USD export with friction, collision, and inertial properties. Optimized for Isaac Sim's PhysX engine.</p>
+                        <div class="flow-meta">Output: Isaac-ready assets (.usd)</div>
+                    </div>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-id">C</div>
+                    <div>
+                        <h3>Navigation Demo</h3>
+                        <p>PhysX costmap generation + multi‑algorithm planning (A*, Dijkstra, RRT*, Theta*).</p>
+                        <div class="flow-meta">Output: trajectory visualizations + performance metrics</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;"></p>
+        </div>
+    </section>
+
+    <section class="pipeline" id="experiment">
+        <div class="section-inner">
+            <p class="eyebrow">Experiment</p>
+            <h2>Experimental Results</h2>
+
+            <!-- 表格 + 图片 一人一半，高度对齐 -->
+            <div class="experiment-layout">
+                <!-- 表格 -->
+                <div class="experiment-table-wrap">
+                    <table class="experiment-table" style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <thead>
+                            <tr style="background: #d4e6f1;">
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Algorithm</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Success Rate</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Avg Time (s)</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Path Length (m)</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Energy (J)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">A*</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">92%</td>
+                                <td style="padding: 0.7rem 1rem;">1.2</td>
+                                <td style="padding: 0.7rem 1rem;">15.3</td>
+                                <td style="padding: 0.7rem 1rem;">42.1</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Dijkstra</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">88%</td>
+                                <td style="padding: 0.7rem 1rem;">1.8</td>
+                                <td style="padding: 0.7rem 1rem;">16.1</td>
+                                <td style="padding: 0.7rem 1rem;">44.7</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">RRT*</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">95%</td>
+                                <td style="padding: 0.7rem 1rem;">3.5</td>
+                                <td style="padding: 0.7rem 1rem;">14.2</td>
+                                <td style="padding: 0.7rem 1rem;">39.8</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Theta*</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">97%</td>
+                                <td style="padding: 0.7rem 1rem;">2.1</td>
+                                <td style="padding: 0.7rem 1rem;">13.8</td>
+                                <td style="padding: 0.7rem 1rem;">37.2</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">PRM</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">91%</td>
+                                <td style="padding: 0.7rem 1rem;">2.9</td>
+                                <td style="padding: 0.7rem 1rem;">14.9</td>
+                                <td style="padding: 0.7rem 1rem;">41.3</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Informed RRT*</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">96%</td>
+                                <td style="padding: 0.7rem 1rem;">2.7</td>
+                                <td style="padding: 0.7rem 1rem;">13.5</td>
+                                <td style="padding: 0.7rem 1rem;">36.5</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">BIT*</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">98%</td>
+                                <td style="padding: 0.7rem 1rem;">2.3</td>
+                                <td style="padding: 0.7rem 1rem;">13.2</td>
+                                <td style="padding: 0.7rem 1rem;">35.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 图片 -->
+                <div class="experiment-image-wrap">
+                    <img src="figure/figure2.png" alt="Experiment visualization" />
+                </div>
+            </div>
+
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; margin-top: 1.5rem;">
+                Performance comparison of different path planning algorithms on our procedurally generated Mars terrain scenes.
+            </p>
+        </div>
+    </section>
+
+    <section class="pipeline" id="demo1">
+        <div class="section-inner">
+            <p class="eyebrow">Demo 1</p>
+            <h2>Demo 1 · Front &amp; Top‑down Views</h2>
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; text-align: center; color: var(--ink-soft);">
+                Algorithm comparison: front view and top‑down trajectory visualization
+            </p>
+
+            <div class="gif-group">
+                <h3 class="gif-caption">🍉 Front view Results of Different Algorithms</h3>
+                <div class="gif-grid">
+                    <figure class="gif-item">
+                        <img src="assets/rover_astar_front.gif" alt="A* Front" />
+                        <figcaption>A* (Front)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_dijkstra_front.gif" alt="Dijkstra Front" />
+                        <figcaption>Dijkstra (Front)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_rrt_star_front.gif" alt="RRT* Front" />
+                        <figcaption>RRT* (Front)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_theta_star_front.gif" alt="Theta* Front" />
+                        <figcaption>Theta* (Front)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="gif-group">
+                <h3 class="gif-caption">🍉 Top‑down view Results of Different Algorithms</h3>
+                <div class="gif-grid">
+                    <figure class="gif-item">
+                        <img src="assets/rover_astar_topdown.gif" alt="A* Top-down" />
+                        <figcaption>A* (Top-down)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_dijkstra_topdown.gif" alt="Dijkstra Top-down" />
+                        <figcaption>Dijkstra (Top-down)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_rrt_star_topdown.gif" alt="RRT* Top-down" />
+                        <figcaption>RRT* (Top-down)</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/rover_theta_star_topdown.gif" alt="Theta* Top-down" />
+                        <figcaption>Theta* (Top-down)</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pipeline" id="demo2">
+        <div class="section-inner">
+            <p class="eyebrow">Demo 2</p>
+            <h2>Demo 2 · MP4 Video + Keyframes</h2>
+            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; text-align: center; color: var(--ink-soft);">
+                Full navigation demo video with corresponding keyframe images
+            </p>
+
+            <!-- ★★★★★ 视频已按第一个 HTML 样式调整：autoplay muted loop playsinline controls ★★★★★ -->
+            <div style="margin: 1.5rem 0 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
+                <video autoplay muted loop playsinline controls style="width: 100%; height: auto; display: block; background: #1c211e;">
+                    <source src="assets/demo2.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+
+            <div class="gif-group">
+                <h3 class="gif-caption">📷 Keyframes / Supplementary Views</h3>
+                <div class="gif-grid">
+                    <figure class="gif-item">
+                        <img src="assets/demo2_frame1.png" alt="frame 1" />
+                        <figcaption>Frame 1</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/demo2_frame2.png" alt="frame 2" />
+                        <figcaption>Frame 2</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/demo2_frame3.png" alt="frame 3" />
+                        <figcaption>Frame 3</figcaption>
+                    </figure>
+                    <figure class="gif-item">
+                        <img src="assets/demo2_frame4.png" alt="frame 4" />
+                        <figcaption>Frame 4</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <p class="note" style="text-align:center; margin-top:0.5rem; color: var(--ink-soft);">
+                👆 请将 <code>demo2.mp4</code> 和 <code>demo2_frame1.png</code> ~ <code>demo2_frame4.png</code> 放置在 <code>assets/</code> 文件夹中。
+            </p>
+        </div>
+    </section>
+
+    <footer style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 2rem clamp(1.25rem, 5vw, 4rem); border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--ink-soft);">
+        <span>© 2026 VMR-Team · OAISYS Master5</span>
+        <span>Built with Sora &amp; Fraunces</span>
+    </footer>
+
+    <script>
+        const items = document.querySelectorAll(".flow-item");
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) e.target.classList.add("in");
+                });
+            }, { threshold: 0.2 }
+        );
+        items.forEach((el) => io.observe(el));
+    </script>
+</body>
+</html>

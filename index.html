@@ -38,9 +38,8 @@
             line-height: 1.55;
             overflow-x: hidden;
 
-            /* ★★★ 核心改动：背景移到 body，并固定，实现平滑过渡 ★★★ */
             background: linear-gradient(165deg, #ebe4d6 0%, var(--paper) 40%, #e7efea 100%);
-            background-attachment: fixed; /* 关键：滚动时背景固定，不再跟随板块断裂 */
+            background-attachment: fixed; 
         }
         a {
             color: inherit;
@@ -250,12 +249,10 @@
             margin-bottom: 2.5rem;
         }
 
-        /* ★★★ 移除每个板块的独立渐变，改为透明，让 body 背景透出来 ★★★ */
         .pipeline {
             background: transparent;
             position: relative;
         }
-        /* 网格点阵装饰保留，但放在透明背景上 */
         .pipeline::before {
             content: "";
             position: absolute;
@@ -266,7 +263,6 @@
             opacity: 0.7;
         }
 
-        /* —— flow-item 渐入效果 —— */
         .flow {
             position: relative;
             display: grid;
@@ -348,7 +344,6 @@
             font-weight: 500;
         }
 
-        /* —— Experiment 表格+图片 一人一半 —— */
         .experiment-layout {
             display: flex;
             flex-wrap: wrap;
@@ -512,7 +507,7 @@
         <div class="section-inner">
             <p class="eyebrow">Framework</p>
             <h2>Framework Overview</h2>
-            <img src="figure/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
+            <img src=".static/images/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
                 Our framework consists of three main modules: procedural terrain generation, multi-modal data synthesis, and physics-based asset export for simulation.
             </p>
@@ -524,7 +519,7 @@
             <p class="eyebrow">Pipeline</p>
             <h2 style="text-align: center;">Pipeline Overview</h2>
 
-            <img src="figure/liuchengx.png" alt="Pipeline" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />
+            <img src="./static/images/liuchengx.png" alt="Pipeline" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />
 
             <table class="pipeline-table">
                 <thead>
@@ -596,62 +591,55 @@
                     <table class="experiment-table" style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                         <thead>
                             <tr style="background: #d4e6f1;">
-                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Algorithm</th>
-                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Success Rate</th>
-                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Avg Time (s)</th>
-                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Path Length (m)</th>
-                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">Energy (J)</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Real/Synthetic</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600; border-right: 2px solid #b0c4ce;">Domain-Adapted</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">mIoU(%)</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">aACC(%)</th>
+                                <th style="padding: 0.8rem 1rem; text-align: left; font-weight: 600;">mAcc(%)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">A*</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">92%</td>
-                                <td style="padding: 0.7rem 1rem;">1.2</td>
-                                <td style="padding: 0.7rem 1rem;">15.3</td>
-                                <td style="padding: 0.7rem 1rem;">42.1</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">4005/0</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">--</td>
+                                <td style="padding: 0.7rem 1rem;">63.56</td>
+                                <td style="padding: 0.7rem 1rem;">79.68</td>
+                                <td style="padding: 0.7rem 1rem;">76.36</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Dijkstra</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">88%</td>
-                                <td style="padding: 0.7rem 1rem;">1.8</td>
-                                <td style="padding: 0.7rem 1rem;">16.1</td>
-                                <td style="padding: 0.7rem 1rem;">44.7</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">3000/1005</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">√</td>
+                                <td style="padding: 0.7rem 1rem;">63.31</td>
+                                <td style="padding: 0.7rem 1rem;">77.66</td>
+                                <td style="padding: 0.7rem 1rem;">76.93</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">RRT*</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">95%</td>
-                                <td style="padding: 0.7rem 1rem;">3.5</td>
-                                <td style="padding: 0.7rem 1rem;">14.2</td>
-                                <td style="padding: 0.7rem 1rem;">39.8</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">2000/2005</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">√</td>
+                                <td style="padding: 0.7rem 1rem;">62.15</td>
+                                <td style="padding: 0.7rem 1rem;">77.93</td>
+                                <td style="padding: 0.7rem 1rem;">74.65</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Theta*</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">97%</td>
-                                <td style="padding: 0.7rem 1rem;">2.1</td>
-                                <td style="padding: 0.7rem 1rem;">13.8</td>
-                                <td style="padding: 0.7rem 1rem;">37.2</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">1000/3005</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">√</td>
+                                <td style="padding: 0.7rem 1rem;">67.15</td>
+                                <td style="padding: 0.7rem 1rem;">78.68</td>
+                                <td style="padding: 0.7rem 1rem;">77.82</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">PRM</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">91%</td>
-                                <td style="padding: 0.7rem 1rem;">2.9</td>
-                                <td style="padding: 0.7rem 1rem;">14.9</td>
-                                <td style="padding: 0.7rem 1rem;">41.3</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">0/4005</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">√</td>
+                                <td style="padding: 0.7rem 1rem;">56.55</td>
+                                <td style="padding: 0.7rem 1rem;">71.42</td>
+                                <td style="padding: 0.7rem 1rem;">72.49</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">Informed RRT*</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">96%</td>
-                                <td style="padding: 0.7rem 1rem;">2.7</td>
-                                <td style="padding: 0.7rem 1rem;">13.5</td>
-                                <td style="padding: 0.7rem 1rem;">36.5</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">BIT*</td>
-                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">98%</td>
-                                <td style="padding: 0.7rem 1rem;">2.3</td>
-                                <td style="padding: 0.7rem 1rem;">13.2</td>
-                                <td style="padding: 0.7rem 1rem;">35.8</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">0/4005</td>
+                                <td style="padding: 0.7rem 1rem; border-right: 2px solid #dce5eb;">×</td>
+                                <td style="padding: 0.7rem 1rem;">24.87</td>
+                                <td style="padding: 0.7rem 1rem;">49.17</td>
+                                <td style="padding: 0.7rem 1rem;">43.79</td>
                             </tr>
                         </tbody>
                     </table>
@@ -659,7 +647,7 @@
 
                 <!-- 图片 -->
                 <div class="experiment-image-wrap">
-                    <img src="figure/figure2.png" alt="Experiment visualization" />
+                    <img src="./static/images/figure21.png" alt="Experiment visualization" />
                 </div>
             </div>
 
@@ -752,33 +740,10 @@
             <div style="margin: 1.5rem 0 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
                 <video autoplay muted loop playsinline controls style="width: 100%; height: auto; display: block; background: #1c211e;">
                     <source src="./static/videos/demo2.mp4" type="video/mp4">
-                    您的浏览器不支持 video 标签。
                 </video>
             </div>
 
-            <div class="gif-group">
-                <h3 class="gif-caption">📷 Keyframes / Supplementary Views</h3>
-                <div class="gif-grid">
-                    <figure class="gif-item">
-                        <img src="assets/demo2_frame1.png" alt="frame 1" />
-                        <figcaption>Frame 1</figcaption>
-                    </figure>
-                    <figure class="gif-item">
-                        <img src="assets/demo2_frame2.png" alt="frame 2" />
-                        <figcaption>Frame 2</figcaption>
-                    </figure>
-                    <figure class="gif-item">
-                        <img src="assets/demo2_frame3.png" alt="frame 3" />
-                        <figcaption>Frame 3</figcaption>
-                    </figure>
-                    <figure class="gif-item">
-                        <img src="assets/demo2_frame4.png" alt="frame 4" />
-                        <figcaption>Frame 4</figcaption>
-                    </figure>
-                </div>
-            </div>
             <p class="note" style="text-align:center; margin-top:0.5rem; color: var(--ink-soft);">
-                👆 请将 <code>demo2.mp4</code> 和 <code>demo2_frame1.png</code> ~ <code>demo2_frame4.png</code> 放置在 <code>assets/</code> 文件夹中。
             </p>
         </div>
     </section>

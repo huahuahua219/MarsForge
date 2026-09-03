@@ -140,7 +140,7 @@
         .hero-brand {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2rem, 6vw, 3rem);
             line-height: 0.95;
             letter-spacing: -0.03em;
             text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
@@ -498,19 +498,68 @@
             <p class="eyebrow">Abstract</p>
             <h2 style="text-align: center;">Abstract</h2>
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
-                We present a procedural framework for generating photorealistic Mars-like terrains with multi-modal data outputs including RGB images, semantic masks, depth maps, and physically accurate USD assets. Our pipeline enables seamless integration with Isaac Sim for autonomous navigation research, supporting multiple path planning algorithms with realistic physics simulation.
-            </p>
+                 The rapid development of deep learning has driven advances in planetary exploration, and its performance often relies on large-scale and high-fidelity training data. However, the high cost of acquiring real Martian surface data makes synthetic data a practical alternative for alleviating data scarcity and enabling multimodal alignment. 
+        Existing synthetic Martian datasets commonly rely on 3D reconstruction from real observations or manually designed virtual environments, which are respectively constrained by reconstruction quality and synthetic-to-real domain gaps.
+        To address these limitations, we propose 
+a procedural data generation framework for generating learning-oriented, multimodal Martian simulation data with domain-adaptive visual rendering.
+        For visual data generation, We incorporates SPADE-Mars for synthetic-to-real scene transformation.
+        Experimental results demonstrate that SPADE-Mars can reduce the domain gap and adapt to diverse Martian rover visual styles. The domain-adapted synthetic data achieving 88.97% of the real-data baseline and synthetic-real fusion surpassing the baseline by 3.59%. To fully exploit the constructed scenes and leverage the task-specific capabilities of different simulation environments, the outputs semantically defined scene entities as reusable assets, enabling downstream tasks to be decoupled across different simulation environments. An interface to Isaac Sim is further provided to demonstrate their reuse as physics-enabled assets. </p>
         </div>
     </section>
 
     <section class="pipeline" id="framework">
         <div class="section-inner">
             <p class="eyebrow">Framework</p>
-            <h2>Framework Overview</h2>
+            <h2 style="text-align: center;">Framework Overview</h2>
             <img src="./static/images/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
-                Our framework consists of three main modules: procedural terrain generation, multi-modal data synthesis, and physics-based asset export for simulation.
+                The proposed framework for generating realistic multimodel synthetic data and physically grounded terrain assets.
             </p>
+          
+        <div style="overflow-x: auto; margin-top: 2.5rem;">
+            <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <!-- 第一行（特殊行） -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列2</td>
+                    <!-- 第3-4列合并，跨两行 -->
+                    <td colspan="2" rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">合并 3-4 列<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列7</td>
+                    <!-- 第8-12列合并，跨两行 -->
+                    <td colspan="5" rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">合并 8-12 列<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
+                </tr>
+                <!-- 第二行（第一行的下半部分，对应跨行位置为空） -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据2</td>
+                    <!-- 3-4被跨，不写 -->
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据7</td>
+                    <!-- 8-12被跨，不写 -->
+                </tr>
+                <!-- 第3行 ~ 第10行（共8行，每行12列） -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-12</td>
+                </tr>
+             
+            </table>
+        </div>
+    </div>
+</section>
         </div>
     </section>
 
@@ -522,6 +571,7 @@
             <img src="./static/images/liuchengx.png" alt="Pipeline" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />
 
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;"></p>
+            Overview of the proposed procedural Martian scene generation pipeline.
         </div>
     </section>
 

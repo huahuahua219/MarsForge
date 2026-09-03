@@ -221,7 +221,7 @@
 
         /* —— Sections —— */
         section {
-            padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+            padding: clamp(2rem, 4vw,4rem) clamp(1.25rem, 5vw, 4rem);
         }
         .section-inner {
             max-width: 68rem;
@@ -516,31 +516,31 @@ a procedural data generation framework for generating learning-oriented, multimo
                 The proposed framework for generating realistic multimodel synthetic data and physically grounded terrain assets.
             </p>
           
+          
+
+        <!-- ========== 修正后的表格（11行×12列） ========== -->
         <div style="overflow-x: auto; margin-top: 2.5rem;">
             <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                <!-- 第一行（特殊行） -->
+                <!-- 第1行：特殊子行1（合并跨列） -->
                 <tr>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列1</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列2</td>
-                    <!-- 第3-4列合并，跨两行 -->
-                    <td colspan="2" rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">合并 3-4 列<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列5</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列6</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #f0ebe0; font-weight: 600;">列7</td>
-                    <!-- 第8-12列合并，跨两行 -->
-                    <td colspan="5" rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">合并 8-12 列<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
+                    <td rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">列1-2<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
+                    <td colspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #d4c9b8; font-weight: 600; text-align: center;">合并 3-4 列<br><span style="font-weight:400; font-size:0.8rem;">(第一子行)</span></td>
+                    <td rowspan="2" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #e3dcd0; font-weight: 600; text-align: center;">列5-7<br><span style="font-weight:400; font-size:0.8rem;">(跨2行)</span></td>
+                    <td colspan="5" style="padding: 0.7rem 1rem; border: 1px solid var(--line); background: #d4c9b8; font-weight: 600; text-align: center;">合并 8-12 列<br><span style="font-weight:400; font-size:0.8rem;">(第一子行)</span></td>
                 </tr>
-                <!-- 第二行（第一行的下半部分，对应跨行位置为空） -->
+                <!-- 第2行：特殊子行2（各自独立） -->
                 <tr>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据1</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据2</td>
-                    <!-- 3-4被跨，不写 -->
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据5</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据6</td>
-                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">数据7</td>
-                    <!-- 8-12被跨，不写 -->
+                    <!-- 列1-2被跨，不写 -->
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列4</td>
+                    <!-- 列5-7被跨，不写 -->
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">列12</td>
                 </tr>
-                <!-- 第3行 ~ 第10行（共8行，每行12列） -->
+                <!-- 第3行（原第2行数据） -->
                 <tr>
                     <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-1</td>
                     <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-2</td>
@@ -555,8 +555,132 @@ a procedural data generation framework for generating learning-oriented, multimo
                     <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-11</td>
                     <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">3-12</td>
                 </tr>
-             
+                <!-- 第4行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">4-12</td>
+                </tr>
+                <!-- 第5行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">5-12</td>
+                </tr>
+                <!-- 第6行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">6-12</td>
+                </tr>
+                <!-- 第7行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">7-12</td>
+                </tr>
+                <!-- 第8行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">8-12</td>
+                </tr>
+                <!-- 第9行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">9-12</td>
+                </tr>
+                <!-- 第10行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">10-12</td>
+                </tr>
+                <!-- 第11行 -->
+                <tr>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-1</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-2</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-3</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-4</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-5</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-6</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-7</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-8</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-9</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-10</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-11</td>
+                    <td style="padding: 0.7rem 1rem; border: 1px solid var(--line);">11-12</td>
+                </tr>
             </table>
+        </div>
+        <!-- ========== 表格结束 ========== -->
+
+    </div>
+</section>
         </div>
     </div>
 </section>

@@ -35,9 +35,12 @@
         body {
             font-family: var(--font-body);
             color: var(--ink);
-            background: var(--paper);
             line-height: 1.55;
             overflow-x: hidden;
+
+            /* ★★★ 核心改动：背景移到 body，并固定，实现平滑过渡 ★★★ */
+            background: linear-gradient(165deg, #ebe4d6 0%, var(--paper) 40%, #e7efea 100%);
+            background-attachment: fixed; /* 关键：滚动时背景固定，不再跟随板块断裂 */
         }
         a {
             color: inherit;
@@ -247,11 +250,12 @@
             margin-bottom: 2.5rem;
         }
 
+        /* ★★★ 移除每个板块的独立渐变，改为透明，让 body 背景透出来 ★★★ */
         .pipeline {
-            background:
-                linear-gradient(165deg, #ebe4d6 0%, var(--paper) 40%, #e7efea 100%);
+            background: transparent;
             position: relative;
         }
+        /* 网格点阵装饰保留，但放在透明背景上 */
         .pipeline::before {
             content: "";
             position: absolute;
@@ -467,6 +471,7 @@
     </style>
 </head>
 <body>
+    <!-- 页面内容保持不变（完全继承之前的视频和结构） -->
     <header class="hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="topbar">
@@ -664,7 +669,7 @@
         </div>
     </section>
 
-    <!-- ============ Demo 1 已全部替换为 MP4 视频 ============ -->
+    <!-- Demo 1 视频展示 -->
     <section class="pipeline" id="demo1">
         <div class="section-inner">
             <p class="eyebrow">Demo 1</p>
@@ -735,6 +740,7 @@
         </div>
     </section>
 
+    <!-- Demo 2 视频展示 -->
     <section class="pipeline" id="demo2">
         <div class="section-inner">
             <p class="eyebrow">Demo 2</p>

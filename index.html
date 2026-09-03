@@ -507,7 +507,7 @@
         <div class="section-inner">
             <p class="eyebrow">Framework</p>
             <h2>Framework Overview</h2>
-            <img src=".static/images/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
+            <img src="./static/images/mars6.png" alt="Framework" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
                 Our framework consists of three main modules: procedural terrain generation, multi-modal data synthesis, and physics-based asset export for simulation.
             </p>
@@ -521,60 +521,6 @@
 
             <img src="./static/images/liuchengx.png" alt="Pipeline" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1.5rem;" />
 
-            <table class="pipeline-table">
-                <thead>
-                    <tr>
-                        <th>Stage</th>
-                        <th>Description</th>
-                        <th>Output</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>A. Scene Generation</td>
-                        <td>Blender-based terrain & rock placement</td>
-                        <td>Batch scenes + masks</td>
-                    </tr>
-                    <tr>
-                        <td>B. Physics Export</td>
-                        <td>USD with friction & collision</td>
-                        <td>Isaac-ready assets</td>
-                    </tr>
-                    <tr>
-                        <td>C. Navigation Demo</td>
-                        <td>PhysX costmap + multi‑algorithm planning</td>
-                        <td>Trajectory visualizations</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="flow">
-                <div class="flow-item">
-                    <div class="flow-id">A</div>
-                    <div>
-                        <h3>Scene Generation</h3>
-                        <p>Blender-based terrain &amp; rock placement with semantic masks. Supports variable terrain complexity and rock distributions.</p>
-                        <div class="flow-meta">Output: batch scenes + RGB + semantic masks + depth</div>
-                    </div>
-                </div>
-                <div class="flow-item">
-                    <div class="flow-id">B</div>
-                    <div>
-                        <h3>Physics Export</h3>
-                        <p>USD export with friction, collision, and inertial properties. Optimized for Isaac Sim's PhysX engine.</p>
-                        <div class="flow-meta">Output: Isaac-ready assets (.usd)</div>
-                    </div>
-                </div>
-                <div class="flow-item">
-                    <div class="flow-id">C</div>
-                    <div>
-                        <h3>Navigation Demo</h3>
-                        <p>PhysX costmap generation + multi‑algorithm planning (A*, Dijkstra, RRT*, Theta*).</p>
-                        <div class="flow-meta">Output: trajectory visualizations + performance metrics</div>
-                    </div>
-                </div>
-            </div>
-
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;"></p>
         </div>
     </section>
@@ -584,9 +530,9 @@
             <p class="eyebrow">Experiment</p>
             <h2>Experimental Results</h2>
 
-            <!-- 表格 + 图片 一人一半，高度对齐 -->
+      
             <div class="experiment-layout">
-                <!-- 表格 -->
+    
                 <div class="experiment-table-wrap">
                     <table class="experiment-table" style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                         <thead>

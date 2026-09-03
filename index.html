@@ -32,6 +32,10 @@
             scroll-behavior: smooth;
             scroll-padding-top: 2rem;
         }
+       framework table td {
+    text-align: center;
+    vertical-align: middle; 
+}
         body {
             font-family: var(--font-body);
             color: var(--ink);
@@ -525,7 +529,7 @@ a procedural data generation framework for generating learning-oriented, multimo
     <td colspan="2" style="padding: 1rem 1.5rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 1rem;">Primary Focus</td>
     <td rowspan="2" style="padding: 1rem 1.5rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 1rem;">Procedural</td>
     <td rowspan="2" style="padding: 1rem 1.5rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 1rem;">Classes</td>
-    <td rowspan="2" style="padding: 1rem 1.5rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 1rem;">Domain‑Adaptive</td>
+   <td rowspan="2" style="padding: 1rem 0.8rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 0.9rem; white-space: nowrap;">Domain‑Adaptive</td>
     <td colspan="5" style="padding: 1rem 1.5rem; border: 1px solid var(--line); background: #d4e6f1; font-weight: 600; text-align: center; font-size: 1rem;">Outputs</td>
 </tr>
                 <tr>
@@ -686,7 +690,7 @@ a procedural data generation framework for generating learning-oriented, multimo
     <section class="pipeline" id="experiment">
         <div class="section-inner">
             <p class="eyebrow">Experiment</p>
-            <h2>Experimental Results</h2>
+            <h2 style="text-align: center;">Experimental Results</h2>
 
       
             <div class="experiment-layout">
@@ -765,9 +769,9 @@ a procedural data generation framework for generating learning-oriented, multimo
     <section class="pipeline" id="demo1">
         <div class="section-inner">
             <p class="eyebrow">Demo 1</p>
-            <h2>Demo 1 · Front &amp; Top‑down Views</h2>
+            <h2 style="text-align: center;">Demo1:Navigation Demonstration with Different Planning Algorithms</h2>
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; text-align: center; color: var(--ink-soft);">
-                Algorithm comparison: front view and top‑down trajectory visualization
+               The generated semantic assets are used to reconstruct the Martian environment in NVIDIA Isaac Sim, where mobile robot motion is simulated under different planning algorithms. The video presents both the front-view navigation process and the corresponding top-down trajectories for comparison.
             </p>
 
             <div class="gif-group">
@@ -832,25 +836,31 @@ a procedural data generation framework for generating learning-oriented, multimo
         </div>
     </section>
 
-    <!-- Demo 2 视频展示 -->
-    <section class="pipeline" id="demo2">
-        <div class="section-inner">
-            <p class="eyebrow">Demo 2</p>
-            <h2>Demo 2 · MP4 Video + Keyframes</h2>
-            <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; text-align: center; color: var(--ink-soft);">
-                Full navigation demo video with corresponding keyframe images
-            </p>
+  <section class="pipeline" id="demo2">
+    <div class="section-inner">
+        <p class="eyebrow">Demo 2</p>
+        <h2 style="text-align: center;">Demo 2 · Mobile Robot Motion under Different Terrain Properties</h2>
+        <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto; text-align: center; color: var(--ink-soft);">
+            The generated semantic assets are imported into NVIDIA Isaac Sim 6.0.1 through the implemented interface, where physical properties are assigned to terrain and rock assets according to their semantic categories. A planned rover route traversing different terrain types is then simulated under the corresponding physical properties, with the resulting front-view motion and wheel–ground slip ratio presented for comparison.
 
-            <div style="margin: 1.5rem 0 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
-                <video autoplay muted loop playsinline controls style="width: 100%; height: auto; display: block; background: #1c211e;">
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; align-items: stretch;">
+
+            <div style="flex: 2; min-width: 280px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
+                <video autoplay muted loop playsinline controls style="width: 100%; height: 100%; display: block; background: #1c211e; object-fit: cover;">
                     <source src="./static/videos/demo2.mp4" type="video/mp4">
+            
                 </video>
             </div>
-
-            <p class="note" style="text-align:center; margin-top:0.5rem; color: var(--ink-soft);">
-            </p>
+            <div style="flex: 1; min-width: 180px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #f0ebe0; display: flex; align-items: center; justify-content: center;">
+                <img src="./static/images/py.png" alt="Keyframe" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+            </div>
         </div>
-    </section>
+
+        <p class="note" style="text-align:center; margin-top:0.5rem; color: var(--ink-soft);">
+        </p>
+    </div>
+</section>
 
     <footer style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 2rem clamp(1.25rem, 5vw, 4rem); border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--ink-soft);">
         <span>© 2026 VMR-Team · OAISYS Master5</span>

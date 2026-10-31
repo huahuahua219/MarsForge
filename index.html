@@ -500,12 +500,13 @@
             <p class="eyebrow">Abstract</p>
             <h2 style="text-align: center;">Abstract</h2>
             <p class="lede" style="max-width: 64rem; margin-left: auto; margin-right: auto;">
-                 The rapid development of deep learning has driven advances in planetary exploration, and its performance often relies on large-scale and high-fidelity training data. However, the high cost of acquiring real Martian surface data makes synthetic data a practical alternative for alleviating data scarcity and enabling multimodal alignment. 
-        Existing synthetic Martian datasets commonly rely on 3D reconstruction from real observations or manually designed virtual environments, which are respectively constrained by reconstruction quality and synthetic-to-real domain gaps.
-        To address these limitations, we propose 
-a procedural data generation framework for generating learning-oriented, multimodal Martian simulation data with domain-adaptive visual rendering.
-        For visual data generation, We incorporates SPADE-Mars for synthetic-to-real scene transformation.
-        Experimental results demonstrate that SPADE-Mars can reduce the domain gap and adapt to diverse Martian rover visual styles. The domain-adapted synthetic data achieving 88.97% of the real-data baseline and synthetic-real fusion surpassing the baseline by 3.59%. To fully exploit the constructed scenes and leverage the task-specific capabilities of different simulation environments, the outputs semantically defined scene entities as reusable assets, enabling downstream tasks to be decoupled across different simulation environments. An interface to Isaac Sim is further provided to demonstrate their reuse as physics-enabled assets. </p>
+           The rapid development of deep learning has driven advances in planetary exploration, and its performance often relies on large-scale and high-fidelity training data. However, the high cost of acquiring real Martian surface data makes synthetic data a practical alternative for alleviating data scarcity and enabling multimodal alignment.
+                Existing synthetic Martian datasets commonly rely on 3D reconstruction from real observations or manually designed virtual environments, which are respectively constrained by reconstruction quality and synthetic-to-real domain gaps.
+                To address these limitations, we propose 
+a procedural scene generation framework for generating learning-oriented, multimodal Martian simulation data with domain-adaptive visual rendering.
+                We incorporates SPADE-Mars for synthetic-to-real image transformation.
+                Experimental results demonstrate that SPADE-Mars can generate more realistic domain-adapted synthetic data suitable for semantic segmentation training. With our framework, training on domain-adapted synthetic data yields 88.97\% of the real-data baseline mIoU, while combining synthetic and real data further improves performance by 3.59 percentage points.
+                To fully exploit the constructed scenes, the procedurally generated scenes are further decomposed into 3D assets, enabling their decoupled reuse in other simulation environments. An interface to Isaac Sim is further provided to demonstrate their reuse as physics-enabled assets.
         </div>
     </section>
 
